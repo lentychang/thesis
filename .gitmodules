@@ -1,0 +1,15 @@
+[submodule "bringups"]
+	path = bringups
+	url = https://github.com/lentychang/bringups.git
+[submodule "rel_pose_ext"]
+	path = rel_pose_ext
+	url = https://github.com/lentychang/rel_pose_ext.git
+[submodule "sim_device"]
+	path = sim_device
+	url = https://github.com/lentychang/sim_device.git
+[submodule "all_msgs"]
+	path = all_msgs
+	url = https://github.com/lentychang/all_msgs.git
+[submodule "ros_pcl"]
+	path = ros_pcl
+	url = https://github.com/lentychang/ros_pcl.git
