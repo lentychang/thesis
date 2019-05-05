@@ -6,6 +6,8 @@ The more detailed info, please go to related repos mentioned below.
 ## Introduction
 This work tries to improve the object localization accuracy from 3D camera  in robotic assembly tasks by integrating/fusing the initial object localization result from 3D camera into the assembling knowledge in simulation. 
 
+![Senario](https://raw.githubusercontent.com/lentychang/thesis/master/etc/Illustration_Lf064.png)
+
 ## Method  
 The initial object localization result from each object is taken as an input, which applys to the correspondent 3D models as their initial poses in simulation.
 By assumming that if the position patterns of the holes on two parts are close, they should be algined with each other in order to screw them.
