@@ -13,9 +13,10 @@ else
 	mkdir -p  $catkinWS/src
 fi
 
-# clone 
-#git clone --recurse-submodules https://github.com/lentychang/thesis.git $catkinWS/src/thesis
-
+#clone
+if ! [ -d $catkinWS/src/thesis ]; then
+	git clone --recurse-submodules https://github.com/lentychang/thesis.git $catkinWS/src/thesis
+fi
 # check if docker is installed
 if [ -x "$(command -v docker)" ]; then
         echo "Docker is installed"
@@ -25,13 +26,28 @@ else
 fi
 
 # Download Models
-wget -O /tmp/thesis_models.tar.gz "https://docs.google.com/uc?export=download&id=1hu24fzK6UWyHuMvjTJyuWSYJhqoMSfFP"
+if ! [ -d /tmp/thesis_models.tar.gz ]	
+	wget -O /tmp/thesis_models.tar.gz "https://docs.google.com/uc?export=download&id=1hu24fzK6UWyHuMvjTJyuWSYJhqoMSfFP"
+else
+	sizeOfDownloadFile=$( ls -al | grep thesis_models.tar.gz | awk '{ print $5 }')
+     	if [ "$sizeOfDownloadFile" == '85060446' ]; then
+		echo "Download success!!"
+	else
+		echo "Download failed !"
+		rm /tmp/thesis_models.tar.gz
+		echo "Size not correct, please execute this script again or you can downlaod manually to /tmp/thesis_models.tar.gz with following link:\nhttps://drive.google.com/open?id=1hu24fzK6UWyHuMvjTJyuWSYJhqoMSfFP"
+		exit 1
+	fi
+fi
+
+
 if ! [ -d $HOME/exchange ]; then
       mkdir -p $HOME/exchange
-fi      
-tar -xzvf /tmp/thesis_models.tar.gz -C $HOME/exchange/
+fi
 
-
+if ! [ -f /tmp/thesis_models.tar.gz ]; then
+	tar -xzvf /tmp/thesis_models.tar.gz -C $HOME/exchange/
+fi
 
 #[TODO]
 # nvidia version is fixed to nvidia-384, change to auto grep on host machine or
@@ -42,11 +58,11 @@ echo "Start to build docker images, it might takes more than 20mins..."
 # nvdia is related to whether you can launch GUI in container, if you have nvidia gpu card
 read -p "Is there nvidia gpu on your machine? [y/n]" yn 
 case $yn in
-        [Yy]* ) enable_nvdia=true;
-        [Nn]* ) enable_nvdia=false;
+        [Yy]* ) enable_nvdia=true;;
+        [Nn]* ) enable_nvdia=false;;
         * ) echo "Please answer yes or no.";;
 esac
 cd $catkinWS/src/thesis/bringups
 # start build image
-./init_build.sh $enable_nvdia
+bash ./init_build.sh $enable_nvdia
 
