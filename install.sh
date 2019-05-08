@@ -6,6 +6,18 @@ read -p "Please enter your catkin workspace (default=\$HOME/catkin_ws): " catkin
 catkinWS=${catkinWS:-$HOME/catkin_ws}
 echo "catkinWS is set to: ${catkinWS}"
 
+# setup model dir
+read -p "Please enter where you want to put model data on host (default=\$HOME/exchange): " modelDir
+modelDir=${modelDir:-$HOME/exchange}
+
+# nvdia is related to whether you can launch GUI in container, if you have nvidia gpu card
+read -p "Is there nvidia gpu on your machine? [y/n]" yn 
+case $yn in
+        [Yy]* ) enable_nvdia=true;
+        [Nn]* ) enable_nvdia=false;
+        * ) echo "Please answer yes or no.";;
+esac
+
 if [ -d $catkinWS/src ]; then
 	echo "source directory exist" 
 else
@@ -25,7 +37,7 @@ else
 	exit 1
 fi
 
-# Download Models
+# Download Model
 if ! [ -d /tmp/thesis_models.tar.gz ]	
 	wget -O /tmp/thesis_models.tar.gz "https://docs.google.com/uc?export=download&id=1hu24fzK6UWyHuMvjTJyuWSYJhqoMSfFP"
 else
@@ -41,12 +53,12 @@ else
 fi
 
 
-if ! [ -d $HOME/exchange ]; then
-      mkdir -p $HOME/exchange
+if ! [ -d $modelDir ]; then
+      mkdir -p $modelDir
 fi
 
 if ! [ -f /tmp/thesis_models.tar.gz ]; then
-	tar -xzvf /tmp/thesis_models.tar.gz -C $HOME/exchange/
+	tar -xzvf /tmp/thesis_models.tar.gz -C $modelDir
 fi
 
 #[TODO]
@@ -55,14 +67,10 @@ fi
 
 # build images
 echo "Start to build docker images, it might takes more than 20mins..."
-# nvdia is related to whether you can launch GUI in container, if you have nvidia gpu card
-read -p "Is there nvidia gpu on your machine? [y/n]" yn 
-case $yn in
-        [Yy]* ) enable_nvdia=true;;
-        [Nn]* ) enable_nvdia=false;;
-        * ) echo "Please answer yes or no.";;
-esac
+
 cd $catkinWS/src/thesis/bringups
 # start build image
 bash ./init_build.sh $enable_nvdia
 
+# change the position of modelDir to mount
+sed -i "s/- \$HOME\/exchange:\/root\/exchange/- $modelDir\/tempData:\/root\/exchange\/tempData/g" docker-compose.yml
