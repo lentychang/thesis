@@ -13,8 +13,8 @@ modelDir=${modelDir:-$HOME/exchange}
 # nvdia is related to whether you can launch GUI in container, if you have nvidia gpu card
 read -p "Is there nvidia gpu on your machine? [y/n]" yn 
 case $yn in
-        [Yy]* ) enable_nvdia=true;
-        [Nn]* ) enable_nvdia=false;
+        [Yy]* ) enable_nvdia=true;;
+        [Nn]* ) enable_nvdia=false;;
         * ) echo "Please answer yes or no.";;
 esac
 
@@ -38,7 +38,7 @@ else
 fi
 
 # Download Model
-if ! [ -d /tmp/thesis_models.tar.gz ]	
+if ! [ -d /tmp/thesis_models.tar.gz ]; then
 	wget -O /tmp/thesis_models.tar.gz "https://docs.google.com/uc?export=download&id=1hu24fzK6UWyHuMvjTJyuWSYJhqoMSfFP"
 else
 	sizeOfDownloadFile=$( ls -al | grep thesis_models.tar.gz | awk '{ print $5 }')
@@ -73,4 +73,6 @@ cd $catkinWS/src/thesis/bringups
 bash ./init_build.sh $enable_nvdia
 
 # change the position of modelDir to mount
-sed -i "s/- \$HOME\/exchange:\/root\/exchange/- $modelDir\/tempData:\/root\/exchange\/tempData/g" docker-compose.yml
+sed -i "s|\$HOME\/exchange:\/root\/exchange|$modelDir\/tempData:\/root\/exchange\/tempData|g" docker-compose.yml
+sed -i "s|\$HOME\/src|$catkinWS\/src|g" docker-compose.yml
+
