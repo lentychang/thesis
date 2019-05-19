@@ -12,6 +12,9 @@ This work tries to improve the object localization accuracy from 3D camera  in r
 The initial object localization result from each object is taken as an input, which applys to the correspondent 3D models as their initial poses in simulation.
 By assumming that if the position patterns of the holes on two parts are close, they should be algined with each other in order to screw them.
 
+
+
+
 ## Future work
 1. Active Extrinsic constraints localization: Localize objects by using gripper as locating fixture.
 2. ML,DL to learn to find grasp point for locating components.
@@ -46,7 +49,13 @@ This works depends on some open-source packages. However, I didn't check in deta
   - thesis_moveit_config: control robot arm kuka iiwa7
   - thesis_visualization: visualize result in RViz, with markers
 
-### Installation
+### Installation & Usage
+1. `sudo bash ./install.sh`  
+It is an interactive shell script, please enter the location you want to download package  
+2. Launch environment  
+After installation, go to <CATKIN_WORKSPACE>/src/thesis/bringups and execute `docker-compose up`  
+3. The command to add model in gazebo will be upated in the comming weeks  
+
 
 ### Demo Run
 TBD (run datacollection)
