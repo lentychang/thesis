@@ -3,6 +3,8 @@ Work content belongs to IWT Wirtschaft und Technik GmbH
 
 The more detailed info, please go to related repos mentioned below.
 
+**Currently, the alignment method is down due to upgraded package PythonOCC in conda unofficial chanel.**  
+
 ## Introduction
 This work tries to improve the object localization accuracy from 3D camera  in robotic assembly tasks by integrating/fusing the initial object localization result from 3D camera into the assembling knowledge in simulation. 
 
@@ -52,13 +54,27 @@ This works depends on some open-source packages. However, I didn't check in deta
 ### Installation & Usage
 1. `sudo bash ./install.sh`  
 It is an interactive shell script, please enter the location you want to download package  
+2. Download [Model](https://drive.google.com/file/d/1hu24fzK6UWyHuMvjTJyuWSYJhqoMSfFP/view?usp=sharing), if wget failed to download file in the above bash scipt.
 2. Launch environment  
-After installation, go to <CATKIN_WORKSPACE>/src/thesis/bringups and execute `docker-compose up`  
-3. The command to add model in gazebo will be upated in the comming weeks  
+After installation, go to <CATKIN_WORKSPACE>/src/thesis/bringups and execute `docker-compose up` 
+
+**If you fail to launch...**
+   - it might be *.launch files has no execution permission 
+   - model or source code is put to the wrong direction. check the mounted of host in the docker-compose.yml file.
+
 
 
 ### Demo Run
-TBD (run datacollection)
+The command to add model in gazebo will be upated in the comming weeks.  
+
+
+There are at most 7 componets in the Bin.  
+After adding at least two components, the later one will align with the first one, and is shown in rViz with marker with other color.
+```bash
+// add a model to gazebo 
+// and add a marker (visual model) to rviz
+rosservice call /addModelSrv
+```
 
 
 # TODO  
