@@ -53,6 +53,7 @@ This works depends on some open-source packages. However, I didn't check in deta
 
 ### Installation & Usage
 1. `sudo bash ./install.sh`  
+**Installation will take at least 3 hours on a Lenovo T430 ( CPU : i5 3rd gen, 4-threads )**  
 It is an interactive shell script, please enter the location you want to download package  
 2. Download [Model](https://drive.google.com/file/d/1hu24fzK6UWyHuMvjTJyuWSYJhqoMSfFP/view?usp=sharing), if wget failed to download file in the above bash scipt.
 2. Launch environment  
