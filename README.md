@@ -15,7 +15,13 @@ The initial object localization result from each object is taken as an input, wh
 By assumming that if the position patterns of the holes on two parts are close, they should be algined with each other in order to screw them.
 
 
-
+## ToDO
+1. remove submodules and merge into one repo.
+2. remove all ide related code since vs code is now able to attach to remote container. there's no need to install inside container.
+3. assign dependent packages' version explicitly
+4. move CAD models into repos. with git lfs
+5. write test code
+6. CI with travis
 
 ## Future work
 1. Active Extrinsic constraints localization: Localize objects by using gripper as locating fixture.
